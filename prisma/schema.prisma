@@ -1,0 +1,210 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  DEBIT_CARD
+  PAYPAL
+  BANK_TRANSFER
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model User {
+  id          String           @id @default(uuid())
+  name        String
+  email       String           @unique
+  password    String
+  roles       UserRole[]
+  permissions UserPermission[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  createdBy   String?
+  creator     User?            @relation("UserCreator", fields: [createdBy], references: [id])
+  Booking     Booking[]
+  User        User[]           @relation("UserCreator")
+}
+
+model Role {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  users       UserRole[]
+  permissions RolePermission[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Module {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  permissions Permission[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Permission {
+  id        String           @id @default(uuid())
+  name      String           @unique
+  module    Module           @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  moduleId  String
+  roles     RolePermission[]
+  users     UserPermission[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model UserRole {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId String
+
+  @@unique([userId, roleId])
+}
+
+model RolePermission {
+  id           String     @id @default(uuid())
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId       String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permissionId String
+
+  @@unique([roleId, permissionId])
+}
+
+model UserPermission {
+  id           String     @id @default(uuid())
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permissionId String
+
+  @@unique([userId, permissionId])
+}
+
+model Flight {
+  id            Int       @id @default(autoincrement())
+  flightNumber  String    @unique
+  airline       String
+  departure     String
+  destination   String
+  departureTime DateTime
+  arrivalTime   DateTime
+  price         Float
+  bookings      Booking[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Booking {
+  id         Int           @id @default(autoincrement())
+  userId     String
+  user       User          @relation(fields: [userId], references: [id])
+  flightId   Int
+  flight     Flight        @relation(fields: [flightId], references: [id])
+  passengers Passenger[]
+  paymentId  Int?          @unique
+  payment    Payment?      @relation(fields: [paymentId], references: [id])
+  status     BookingStatus @default(PENDING)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+model Passenger {
+  id             Int      @id @default(autoincrement())
+  bookingId      Int
+  booking        Booking  @relation(fields: [bookingId], references: [id])
+  name           String
+  age            Int
+  passportNumber String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Payment {
+  id        Int           @id @default(autoincrement())
+  amount    Float
+  method    PaymentMethod
+  status    PaymentStatus @default(PENDING)
+  booking   Booking?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model basic {
+  basic_id      Int      @id @unique @default(autoincrement())
+  basic_company String?
+  basic_title   String?
+  basic_logo    String?
+  basic_favicon String?
+  basic_flogo   String?
+  basic_editor  Int?
+  basic_slug    String?
+  basic_status  Int      @default(1)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
+model contact_info {
+  contact_info_id       Int      @id @unique @default(autoincrement())
+  contact_info_phone1   String?
+  contact_info_phone2   String?
+  contact_info_phone3   String?
+  contact_info_phone4   String?
+  contact_info_email1   String?
+  contact_info_email2   String?
+  contact_info_email3   String?
+  contact_info_email4   String?
+  contact_info_website1 String?
+  contact_info_website2 String?
+  contact_info_add1     String?
+  contact_info_add2     String?
+  contact_info_add3     String?
+  contact_info_add4     String?
+  contact_info_editor   Boolean  @default(false)
+  contact_info_slug     String?
+  contact_info_status   Boolean  @default(true)
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+}
+
+model social_media {
+  social_media_id        Int      @id @unique @default(autoincrement())
+  social_media_facebook  String?
+  social_media_twitter   String?
+  social_media_linkedin  String?
+  social_media_instagram String?
+  social_media_youtube   String?
+  social_media_pinterest String?
+  social_media_flickr    String?
+  social_media_vimeo     String?
+  social_media_skype     String?
+  social_media_rss       String?
+  social_media_editor    String?
+  social_media_slug      String?
+  created_at             DateTime @default(now())
+  updated_at             DateTime @updatedAt
+}
