@@ -70,7 +70,7 @@ exports.get_airs = catchAsyncError(async (req, res) => {
 
     }, {
         headers: {
-            "Authorization": `Bearer T1RLAQJ3m+J2huIiuVeKAKGFBcAsu00hQh7Lx8pJFjPaWJedgBBQ2MLxU77p/6ODIWfvtBY2AADgR4XNCofPXUCtEo8h5qI5yATFYZlCLW7MEufwrirv+UWB1HiwknDMW40zcSTGITfrc+fjY4EAdRHiRDXbUf7S1xlWPPGcqklqb0wY/xDyntOBfbFnxvdmqAASMSaiviSjalqGsa9/NhCc1VaAKbD0PCWOKJPXQHhXrH6QabvQgqytgAOQCwMUyemnF/q8ou5YXxWKaGEKYkytnlv9E8fyL4Ju1WsTirK9NK0zEql8q/PfJa9l2A6xD+uMNkCSnVauEbVFpD5HXIp9lx80OfxwoRz5a2SsUkLbrfP+S5MIM3o*`,
+            "Authorization": `Bearer T1RLAQIsIMsLTjd2LfaArM+b74hNIGxczswbqk7oYbA8ixr2cxDe+wmqnPNJkBm7xG7ivVIUAADgR/Xp+SVIWzMSruX79ohm8nyFLGN7HAMoPd5LWHgC0g9s5ajWvH4J5Pb78J7SBeJdHLZsRpz0vGHAXFrZiDmTTC9+ooDVg9U4qeAnU1phgW02DK2HkAHePh20AZ/fPAarp4sf4l54klf4pqyGZUx07IyjL4UMD3dal4mknDHkd/uvEdwsXm0kyhFMU69PkAPpPyA4ECWdX7qo+5TFTE/V6udIgsGbonNr6fYXgn5R+egS8et6E7V1kdl+1fV60I/1PI2a5P6cY2I3eH84TY6Bzp+3KlvESE5Ke7DCnGIat0w*`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
