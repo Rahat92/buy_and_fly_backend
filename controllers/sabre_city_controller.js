@@ -4,7 +4,7 @@ const catchAsyncError = require("../utils/catchAsyncError");
 exports.get_all_cities = catchAsyncError(async (req, res) => {
     const response = await axios.get(`https://api.cert.platform.sabre.com/v1/lists/supported/cities`, {
         headers: {
-            "Authorization": `Bearer T1RLAQJSMgXa0UkZIxzzfRKntgoNEDPDZkxywZtyb1UfDrimWRDhCLOldZ5N0H1Lmzs2bZOxAADgYktcP8FHogu+pdXEfa0ABicwGj4v5wmXM6udmtvc2n1dSGLIMCyRucSN+fdme7uX9mySWvuTu58d1pQS5+ds+jT0q58+RgCc/ufG/y78K3D6hpopF//Gin0QZBvpwyqtVBdvx2vT4+w6E34htttG01ZB9LInE2iHS+j5qNNNg+aW7jXVoSbqTDDSjiy+SIppNo1wR/t037VBgox7UkA6OYJRuPuUEaRiYdLkww9vGVxCjHt+vDiJPk1IUIvy50nBWVhLhQR6k3OwpOot7vYiPLQoThLhIk9lJjZ9pqHJ5Jg*`,
+            "Authorization": `Bearer T1RLAQJ3m+J2huIiuVeKAKGFBcAsu00hQh7Lx8pJFjPaWJedgBBQ2MLxU77p/6ODIWfvtBY2AADgR4XNCofPXUCtEo8h5qI5yATFYZlCLW7MEufwrirv+UWB1HiwknDMW40zcSTGITfrc+fjY4EAdRHiRDXbUf7S1xlWPPGcqklqb0wY/xDyntOBfbFnxvdmqAASMSaiviSjalqGsa9/NhCc1VaAKbD0PCWOKJPXQHhXrH6QabvQgqytgAOQCwMUyemnF/q8ou5YXxWKaGEKYkytnlv9E8fyL4Ju1WsTirK9NK0zEql8q/PfJa9l2A6xD+uMNkCSnVauEbVFpD5HXIp9lx80OfxwoRz5a2SsUkLbrfP+S5MIM3o*`,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
