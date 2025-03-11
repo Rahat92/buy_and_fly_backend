@@ -3,6 +3,32 @@ const catchAsyncError = require("../utils/catchAsyncError");
 
 exports.get_airs = catchAsyncError(async (req, res) => {
     console.log(req.body)
+    // {
+    //     "Code": "ADT",
+    //     "Quantity": req.body.adult*1 || 1
+    // },
+    const passengers = [];
+    if(req.body.adult>0){
+        passengers.push({
+            "Code":"ADT",
+            "Quantity":req.body.adult*1
+        })
+    }
+    if(req.body.child>0){
+        passengers.push({
+            "Code":"CNN",
+            "Quantity":req.body.child*1
+        })
+    }
+    if(req.body.infant>0){
+        passengers.push({
+            "Code":"INF",
+            "Quantity":req.body.infant*1
+        })
+    }
+    console.log(passengers)
+    const passenterQuantity = passengers.reduce((f,c) => f+c.Quantity, 0)
+    console.log(Number(passenterQuantity))
     // share trip
     // bd fare
     const response = await axios.post('https://api-crt.cert.havail.sabre.com/v6.1.0/shop/altairports/flights?mode=live', {
@@ -53,16 +79,11 @@ exports.get_airs = catchAsyncError(async (req, res) => {
             "TravelerInfoSummary": {
                 "AirTravelerAvail": [
                     {
-                        "PassengerTypeQuantity": [
-                            {
-                                "Code": "ADT",
-                                "Quantity": req.body.adult*1 || 1
-                            }
-                        ]
+                        "PassengerTypeQuantity": passengers
                     }
                 ],
                 "SeatsRequested": [
-                    req.body.adult*1
+                    passenterQuantity*1
                 ]
             },
             "Version": "1"
